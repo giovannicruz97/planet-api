@@ -8,8 +8,15 @@ import com.giocruz.planetapi.repositories.interfaces.PlanetRepository
 class PlanetRepositoryMemory : PlanetRepository {
 
     private val planets =
-        mutableListOf<Planet>(Planet(UUID.fromString("e16cdb04-e63c-4f01-8fc4-a3cd0aa7dd34"), "Terra", "Hot", "Water"))
-
+        mutableListOf(
+            Planet(
+                UUID.fromString("e16cdb04-e63c-4f01-8fc4-a3cd0aa7dd34"),
+                "Terra",
+                "Hot",
+                "Water",
+                1
+            )
+        )
 
     fun getPlanetsQuantity(): Int {
         return planets.size
@@ -24,8 +31,8 @@ class PlanetRepositoryMemory : PlanetRepository {
         if (notFound) throw PlanetNotFound("planet.id $id not found")
     }
 
-    override fun add(name: String, weather: String, terrain: String) {
-        val planet = Planet(UUID.randomUUID(), name, weather, terrain)
+    override fun add(name: String, weather: String, terrain: String, movieAppearances: Int) {
+        val planet = Planet(UUID.randomUUID(), name, weather, terrain, movieAppearances)
         planets.add(planet)
     }
 
