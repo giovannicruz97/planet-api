@@ -41,6 +41,6 @@ class PlanetRepositoryMemory : PlanetRepository {
     }
 
     override fun findByName(name: String): Planet? {
-        return planets.find { planet: Planet -> planet.name == name }
+        return planets.find { planet: Planet -> planet.name.lowercase() == name.lowercase() }
     }
 }
