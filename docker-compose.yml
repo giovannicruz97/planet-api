@@ -14,6 +14,12 @@ services:
       - POSTGRES_USER=planet-user
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    ports:
+      - "5566:8080"
+    networks:
+      - postgres-network
 
 networks:
   postgres-network:
