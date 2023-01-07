@@ -6,6 +6,13 @@ plugins {
 	kotlin("jvm") version "1.7.21"
 	kotlin("plugin.spring") version "1.7.21"
 	kotlin("plugin.jpa") version "1.7.21"
+	kotlin("plugin.allopen") version "1.6.21"
+}
+
+allOpen {
+	annotation("javax.persistence.Entity")
+	annotation("javax.persistence.Embeddable")
+	annotation("javax.persistence.MappedSuperclass")
 }
 
 group = "com.giocruz"
@@ -22,11 +29,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("org.springdoc:springdoc-openapi-ui:1.6.13")
-	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.13")
-	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.13")
+	implementation("org.postgresql:postgresql:42.5.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("io.mockk:mockk:1.13.3")
 }
 
 tasks.withType<KotlinCompile> {

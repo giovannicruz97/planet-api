@@ -4,7 +4,6 @@ import com.giocruz.planetapi.controllers.dtos.FindPlanetOutput
 import com.giocruz.planetapi.usecases.FindPlanet
 import com.giocruz.planetapi.usecases.ListAllPlanets
 import com.giocruz.planetapi.usecases.dtos.FindPlanetInput
-import io.swagger.v3.oas.annotations.Operation
 import org.apache.coyote.Response
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus

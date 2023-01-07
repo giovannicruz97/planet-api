@@ -1,5 +1,6 @@
 package com.giocruz.planetapi.config
 
+import com.giocruz.planetapi.repositories.database.implementations.PlanetRepositoryDatabase
 import com.giocruz.planetapi.repositories.http.MovieRepositoryHttp
 import com.giocruz.planetapi.repositories.interfaces.MovieRepository
 import com.giocruz.planetapi.repositories.memory.MovieRepositoryMemory
@@ -10,16 +11,20 @@ import com.giocruz.planetapi.usecases.AddPlanet
 import com.giocruz.planetapi.usecases.FindPlanet
 import com.giocruz.planetapi.usecases.ListAllPlanets
 import com.giocruz.planetapi.usecases.RemovePlanet
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.client.RestTemplate
 
 @Configuration
 class ApplicationConfig(
-    @Value("\${environment}")
-    private val environment: String
+        @Value("\${environment}")
+        private val environment: String,
+        @Autowired
+        private val planetRepositoryDatabase: PlanetRepositoryDatabase
 ) {
 
     private val planetRepositoryMemory = PlanetRepositoryMemory()
+
 
     @Bean
     fun addPlanetUseCase(): AddPlanet {

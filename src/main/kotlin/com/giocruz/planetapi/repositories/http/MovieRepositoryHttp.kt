@@ -25,7 +25,7 @@ class MovieRepositoryHttp(private val httpClient: RestTemplate) : MovieRepositor
             if (found.isNullOrEmpty()) {
                 return 0
             }
-            return found.first().films.size ?: 0
+            return found.first().films.size
         } catch (exception: HttpClientErrorException.BadRequest) {
             throw InvalidPlanetName(exception.message ?: "$planetName invalid")
         } catch (exception: HttpServerErrorException) {
