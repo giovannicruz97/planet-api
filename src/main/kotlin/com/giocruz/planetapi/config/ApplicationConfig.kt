@@ -3,6 +3,7 @@ package com.giocruz.planetapi.config
 import com.giocruz.planetapi.repositories.database.implementations.PlanetRepositoryDatabase
 import com.giocruz.planetapi.repositories.http.MovieRepositoryHttp
 import com.giocruz.planetapi.repositories.interfaces.MovieRepository
+import com.giocruz.planetapi.repositories.interfaces.PlanetRepository
 import com.giocruz.planetapi.repositories.memory.MovieRepositoryMemory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -25,28 +26,42 @@ class ApplicationConfig(
 
     private val planetRepositoryMemory = PlanetRepositoryMemory()
 
+    private fun getPlanetRepository(environment: String): PlanetRepository {
+        return when (environment) {
+            "production" -> planetRepositoryDatabase
+            else -> planetRepositoryMemory
+        }
+    }
 
-    @Bean
-    fun addPlanetUseCase(): AddPlanet {
-        val movieRepository: MovieRepository = when (environment) {
+    private fun getMovieRepository(environment: String): MovieRepository {
+        return when (environment) {
             "production" -> MovieRepositoryHttp(RestTemplate())
             else -> MovieRepositoryMemory()
         }
-        return AddPlanet(planetRepositoryMemory, movieRepository)
+    }
+
+    @Bean
+    fun addPlanetUseCase(): AddPlanet {
+        val movieRepository = getMovieRepository(environment)
+        val planetRepository = getPlanetRepository(environment)
+        return AddPlanet(planetRepository, movieRepository)
     }
 
     @Bean
     fun findPlanetUseCase(): FindPlanet {
-        return FindPlanet(planetRepositoryMemory)
+        val planetRepository = getPlanetRepository(environment)
+        return FindPlanet(planetRepository)
     }
 
     @Bean
     fun listAllPlanetsUseCase(): ListAllPlanets {
-        return ListAllPlanets(planetRepositoryMemory)
+        val planetRepository = getPlanetRepository(environment)
+        return ListAllPlanets(planetRepository)
     }
 
     @Bean
     fun removePlanetUseCase(): RemovePlanet {
-        return RemovePlanet(planetRepositoryMemory)
+        val planetRepository = getPlanetRepository(environment)
+        return RemovePlanet(planetRepository)
     }
 }
